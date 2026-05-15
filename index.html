@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KalKyuulator — Technical Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!--HEAdER ig-->
+  <a href="https://instagram.com/kyuremmxd" target="_blank" class="ig-btn">
+    <span class="ig-icon">ⓞ</span>
+    <span class="ig-text">Follow Instagram creator</span>
+  </a>
+
+<!-- ═══════════════════════════════════════
+     ROOM: LANDING (Dashboard)
+════════════════════════════════════════ -->
+<div id="room-landing" class="room active">
+  <div class="container">
+    <div class="logo-wrap">
+      <div class="logo">Kal<span>Kyuu</span>lator</div>
+      <div class="logo-sub"><span class="status-dot"></span>Kalkulator Untuk Tugas Semester 2</div>
+      <div class="logo-bar"></div>
+    </div>
+
+    <div class="room-title">▶ PILIH KATEGORI</div>
+
+    <div class="dash-grid">
+      <!-- Bangun Datar -->
+      <div class="dash-card" onclick="go('room-2d')">
+        <div class="dash-card-corner"></div>
+        <span class="dash-card-icon">⬡</span>
+        <div class="dash-card-title">Bangun Datar</div>
+        <div class="dash-card-desc">Lingkaran · Persegi · Persegi Panjang<br>Segitiga · Trapesium · Jajargenjang</div>
+      </div>
+      <!-- Bangun Ruang -->
+      <div class="dash-card" onclick="go('room-3d')">
+        <div class="dash-card-corner"></div>
+        <span class="dash-card-icon">◈</span>
+        <div class="dash-card-title">Bangun Ruang</div>
+        <div class="dash-card-desc">Bola · Kubus · Balok · Tabung<br>Kerucut · Limas Segiempat</div>
+      </div>
+      <!-- Kelistrikan -->
+      <div class="dash-card card-elec" onclick="go('room-elec')">
+        <div class="dash-card-corner corner-gold"></div>
+        <span class="dash-card-icon">⚡</span>
+        <div class="dash-card-title" style="color:var(--gold)">Kelistrikan</div>
+        <div class="dash-card-desc">Hukum Ohm · Pembagi Tegangan<br>Daya Listrik · Biaya Energi (IDR)</div>
+      </div>
+      <!-- Fisika -->
+      <div class="dash-card card-phys" onclick="go('room-phys')">
+        <div class="dash-card-corner corner-violet"></div>
+        <span class="dash-card-icon">⚛</span>
+        <div class="dash-card-title" style="color:var(--violet)">Fisika</div>
+        <div class="dash-card-desc">Mekanika &amp; Gerak · Energi &amp; Usaha<br>Gelombang &amp; Bunyi</div>
+      </div>
+    </div>
+
+    <!-- Riwayat Global -->
+    <div class="history-panel">
+      <div class="history-header">
+        <div class="history-title">▸ RIWAYAT KALKULASI</div>
+        <button class="btn btn-danger" onclick="clearHistory()">✕ HAPUS</button>
+      </div>
+      <div class="history-list" id="history-list-global">
+        <div class="history-empty" id="hist-empty-global">// Belum ada riwayat kalkulasi.</div>
+      </div>
+    </div>
+
+    <div class="footer">KalKyuulator © 2026 — KyuremmxD</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     ROOM: BANGUN DATAR (2D)
+════════════════════════════════════════ -->
+<div id="room-2d" class="room">
+  <div class="container-wide">
+    <div class="logo-wrap">
+      <div class="logo logo-sm">Kal<span>Kyuu</span>lator</div>
+    </div>
+    <button class="btn btn-back" onclick="go('room-landing')">← KEMBALI KE DASHBOARD</button>
+    <div class="room-title">⬡ BANGUN DATAR</div>
+
+    <div class="page-cols">
+      <!-- Kiri: Kalkulator -->
+      <div>
+
+        <!-- LINGKARAN -->
+        <div class="calc-panel">
+          <div class="corner-tl"></div><div class="corner-br"></div>
+          <div class="calc-title"><span class="icon">○</span> LINGKARAN</div>
+          <div class="formula-hint">Luas = π × r² &nbsp;|&nbsp; Keliling = 2 × π × r</div>
+          <div class="input-group">
+            <label class="input-label">Jari-jari (r)</label>
+            <input class="input-field" type="number" id="c-r" placeholder="contoh: 7" min="0" oninput="calcCircle()">
+          </div>
+          <div class="result-grid">
+            <div class="result-item"><div class="result-label">Luas</div><div class="result-value" id="c-area">—</div><div class="result-sub">satuan²</div></div>
+            <div class="result-item"><div class="result-label">Keliling</div><div class="result-value" id="c-peri">—</div><div class="result-sub">satuan</div></div>
+          </div>
+        </div>
+
+        <!-- PERSEGI -->
+        <div class="calc-panel">
+          <div class="corner-tl"></div><div class="corner-br"></div>
+          <div class="calc-title"><span class="icon">□</span> PERSEGI</div>
+          <div class="formula-hint">Luas = s² &nbsp;|&nbsp; Keliling = 4 × s</div>
+          <div class="input-group">
+            <label class="input-label">Sisi (s)</label>
+            <input class="input-field" type="number" id="sq-s" placeholder="contoh: 5" min="0" oninput="calcSquare()">
+          </div>
+          <div class="result-grid">
+            <div class="result-item"><div class="result-label">Luas</div><div class="result-value" id="sq-area">—</div><div class="result-sub">satuan²</div></div>
+            <div class="result-item"><div class="result-label">Keliling</div><div class="result-value" id="sq-peri">—</div><div class="result-sub">satuan</div></div>
+          </div>
+        </div>
+
+        <!-- PERSEGI PANJANG -->
+        <div class="calc-panel">
+          <div class="corner-tl"></div><div class="corner-br"></div>
+          <div class="calc-title"><span class="icon">▭</span> PERSEGI PANJANG</div>
+          <div class="formula-hint">Luas = p × l &nbsp;|&nbsp; Keliling = 2(p + l)</div>
+          <div class="calc-layout">
+            <div class="input-group">
+              <label class="input-label">Panjang (p)</label>
+              <input class="input-field" type="number" id="rect-p" placeholder="contoh: 10" min="0" oninput="calcRect()">
+            </div>
+            <div class="input-group">
+              <label class="input-label">Lebar (l)</label>
+              <input class="input-field" type="number" id="rect-l" placeholder="contoh: 5" min="0" oninput="calcRect()">
+            </div>
+          </div>
+          <div class="result-grid">
+            <div class="result-item"><div class="result-label">Luas</div><div class="result-value" id="rect-area">—</div><div class="result-sub">satuan²</div></div>
+            <div class="result-item"><div class="result-label">Keliling</div><div class="result-value" id="rect-peri">—</div><div class="result-sub">satuan</div></div>
+          </div>
+        </div>
+
+        <!-- SEGITIGA -->
+        <div class="calc-panel">
+          <div class="corner-tl"></div><div class="corner-br"></div>
+          <div class="calc-title"><span class="icon">△</span> SEGITIGA</div>
+          <div class="formula-hint">Luas = ½ × a × t &nbsp;|&nbsp; Keliling = a + b + c</div>
+          <div class="calc-layout">
+            <div>
+              <div class="input-group"><label class="input-label">Alas (a)</label><input class="input-field" type="number" id="tri-a" placeholder="contoh: 6" min="0" oninput="calcTriangle()"></div>
+              <div class="input-group"><label class="input-label">Tinggi (t)</label><input class="input-field" type="number" id="tri-t" placeholder="contoh: 4" min="0" oninput="calcTriangle()"></div>
+            </div>
+            <div>
+              <div class="input-group"><label class="input-label">Sisi b (keliling)</label><input class="input-field" type="number" id="tri-b" placeholder="opsional" min="0" oninput="calcTriangle()"></div>
+              <div class="input-group"><label class="input-label">Sisi c (keliling)</label><input class="input-field" type="number" id="tri-c" placeholder="opsional" min="0" oninput="calcTriangle()"></div>
+            </div>
+          </div>
+          <div class="result-grid">
+            <div class="result-item"><div class="result-label">Luas</div><div class="result-value" id="tri-area">—</div><div class="result-sub">satuan²</div></div>
+            <div class="result-item"><div class="result-label">Keliling</div><div class="result-value" id="tri-peri">—</div><div class="result-sub">satuan</div></div>
+          </div>
+        </div>
+
+        <!-- TRAPESIUM -->
+        <div class="calc-panel">
+          <div class="corner-tl"></div><div class="corner-br"></div>
+          <div class="calc-title"><span class="icon">⌂</span> TRAPESIUM</div>
+          <div class="formula-hint">Luas = ½ × (a + b) × t &nbsp;|&nbsp; Keliling = a + b + c + d</div>
+          <div class="calc-layout">
+            <div>
+              <div class="input-group"><label class="input-label">Sisi sejajar a</label><input class="input-field" type="number" id="trap-a" placeholder="contoh: 8" min="0" oninput="calcTrap()"></div>
+              <div class="input-group"><label class="input-label">Sisi sejajar b</label><input class="input-field" type="number" id="trap-b" placeholder="contoh: 5" min="0" oninput="calcTrap()"></div>
+            </div>
+            <div>
+              <div class="input-group"><label class="input-label">Tinggi (t)</label><input class="input-field" type="number" id="trap-t" placeholder="contoh: 4" min="0" oninput="calcTrap()"></div>
+              <div class="input-group"><label class="input-label">Jumlah sisi miring (c+d)</label><input class="input-field" type="number" id="trap-cd" placeholder="opsional" min="0" oninput="calcTrap()"></div>
+            </div>
+          </div>
+          <div class="result-grid">
+            <div class="result-item"><div class="result-label">Luas</div><div class="result-value" id="trap-area">—</div><div class="result-sub">satuan²</div></div>
+            <div class="result-item"><div class="result-label">Keliling</div><div class="result-value" id="trap-peri">—</div><div class="result-sub">satuan</div></div>
+          </div>
+        </div>
+
+        <!-- JAJARGENJANG -->
+        <div class="calc-panel">
+          <div class="corner-tl"></div><div class="corner-br"></div>
+          <div class="calc-title"><span class="icon">▱</span> JAJARGENJANG</div>
+          <div class="formula-hint">Luas = a × t &nbsp;|&nbsp; Keliling = 2 × (a + b)</div>
+          <div class="calc-layout">
+            <div>
+              <div class="input-group"><label class="input-label">Alas (a)</label><input class="input-field" type="number" id="para-a" placeholder="contoh: 9" min="0" oninput="calcPara()"></div>
+              <div class="input-group"><label class="input-label">Tinggi (t)</label><input class="input-field" type="number" id="para-t" placeholder="contoh: 5" min="0" oninput="calcPara()"></div>
+            </div>
+            <div>
+              <div class="input-group"><label class="input-label">Sisi miring (b)</label><input class="input-field" type="number" id="para-b" placeholder="opsional" min="0" oninput="calcPara()"></div>
+            </div>
+          </div>
+          <div class="result-grid">
+            <div class="result-item"><div class="result-label">Luas</div><div class="result-value" id="para-area">—</div><div class="result-sub">satuan²</div></div>
+            <div class="result-item"><div class="result-label">Keliling</div><div class="result-value" id="para-peri">—</div><div class="result-sub">satuan</div></div>
+          </div>
+        </div>
+
+      </div><!-- /kiri -->
+
+      <!-- Kanan: Riwayat -->
+      <div>
+        <div class="history-panel history-sticky">
+          <div class="history-header">
+            <div class="history-title">▸ RIWAYAT</div>
+            <button class="btn btn-danger" onclick="clearHistory()">✕ Hapus</button>
+          </div>
+          <div class="history-list" id="history-list-2d">
+            <div class="history-empty" id="hist-empty-2d">// Kosong.</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /page-cols -->
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     ROOM: BANGUN RUANG (3D)
+════════════════════════════════════════ -->
+<div id="room-3d" class="room">
+  <div class="container-wide">
+    <div class="logo-wrap">
+      <div class="logo logo-sm">Kal<span>Kyuu</span>lator</div>
+    </div>
+    <button class="btn btn-back" onclick="go('room-landing')">← KEMBALI KE DASHBOARD</button>
+    <div class="room-title">◈ BANGUN RUANG</div>
+
+    <div class="page-cols">
+      <div>
+
+        <!-- BOLA -->
+        <div class="calc-panel">
+          <div class="corner-tl"></div><div class="corner-br"></div>
+          <div class="calc-title"><span class="icon">◉</span> BOLA</div>
+          <div class="formula-hint">V = 4/3 × π × r³ &nbsp;|&nbsp; LP = 4 × π × r²</div>
+          <div class="input-group">
+            <label class="input-label">Jari-jari (r)</label>
+            <input class="input-field" type="number" id="sph-r" placeholder="contoh: 5" min="0" oninput="calcSphere()">
+          </div>
+          <div class="result-grid">
+            <div class="result-item"><div class="result-label">Volume</div><div class="result-value" id="sph-vol">—</div><div class="result-sub">satuan³</div></div>
+            <div class="result-item"><div class="result-label">Luas Permukaan</div><div class="result-value" id="sph-sa">—</div><div class="result-sub">satuan²</div></div>
+          </div>
+        </div>
+
+        <!-- KUBUS -->
+        <div class="calc-panel">
+          <div class="corner-tl"></div><div class="corner-br"></div>
+          <div class="calc-title"><span class="icon">⬛</span> KUBUS</div>
+          <div class="formula-hint">V = s³ &nbsp;|&nbsp; LP = 6 × s²</div>
+          <div class="input-group">
+            <label class="input-label">Sisi (s)</label>
+            <input class="input-field" type="number" id="cube-s" placeholder="contoh: 4" min="0" oninput="calcCube()">
+          </div>
+          <div class="result-grid">
+            <div class="result-item"><div class="result-label">Volume</div><div class="result-value" id="cube-vol">—</div><div class="result-sub">satuan³</div></div>
+            <div class="result-item"><div class="result-label">Luas Permukaan</div><div class="result-value" id="cube-sa">—</div><div class="result-sub">satuan²</div></div>
+          </div>
+        </div>
+
+        <!-- BALOK -->
+        <div class="calc-panel">
+          <div class="corner-tl"></div><div class="corner-br"></div>
+          <div class="calc-title"><span class="icon">▬</span> BALOK</div>
+          <div class="formula-hint">V = p × l × t &nbsp;|&nbsp; LP = 2(pl + pt + lt)</div>
+          <div class="calc-layout">
+            <div>
+              <div class="input-group"><label class="input-label">Panjang (p)</label><input class="input-field" type="number" id="blk-p" placeholder="contoh: 8" min="0" oninput="calcBalok()"></div>
+              <div class="input-group"><label class="input-label">Lebar (l)</label><input class="input-field" type="number" id="blk-l" placeholder="contoh: 5" min="0" oninput="calcBalok()"></div>
+            </div>
+            <div>
+              <div class="input-group"><label class="input-label">Tinggi (t)</label><input class="input-field" type="number" id="blk-t" placeholder="contoh: 3" min="0" oninput="calcBalok()"></div>
+            </div>
+          </div>
+          <div class="result-grid">
+            <div class="result-item"><div class="result-label">Volume</div><div class="result-value" id="blk-vol">—</div><div class="result-sub">satuan³</div></div>
+            <div class="result-item"><div class="result-label">Luas Permukaan</div><div class="result-value" id="blk-sa">—</div><div class="result-sub">satuan²</div></div>
+          </div>
+        </div>
+
+        <!-- TABUNG (SILINDER) -->
+        <div class="calc-panel">
+          <div class="corner-tl"></div><div class="corner-br"></div>
+          <div class="calc-title"><span class="icon">⚙</span> TABUNG</div>
+          <div class="formula-hint">V = π × r² × t &nbsp;|&nbsp; LP = 2πr(r + t) &nbsp;|&nbsp; LS = 2πrt</div>
+          <div class="calc-layout">
+            <div class="input-group"><label class="input-label">Jari-jari (r)</label><input class="input-field" type="number" id="cyl-r" placeholder="contoh: 3" min="0" oninput="calcCylinder()"></div>
+            <div class="input-group"><label class="input-label">Tinggi (t)</label><input class="input-field" type="number" id="cyl-t" placeholder="contoh: 10" min="0" oninput="calcCylinder()"></div>
+          </div>
+          <div class="result-grid result-grid-3">
+            <div class="result-item"><div class="result-label">Volume</div><div class="result-value" id="cyl-vol">—</div><div class="result-sub">satuan³</div></div>
+            <div class="result-item"><div class="result-label">Luas Permukaan</div><div class="result-value" id="cyl-sa">—</div><div class="result-sub">satuan²</div></div>
+            <div class="result-item"><div class="result-label">Luas Selimut</div><div class="result-value" id="cyl-ls">—</div><div class="result-sub">satuan²</div></div>
+          </div>
+        </div>
+
+        <!-- KERUCUT -->
+        <div class="calc-panel">
+          <div class="corner-tl"></div><div class="corner-br"></div>
+          <div class="calc-title"><span class="icon">△</span> KERUCUT</div>
+          <div class="formula-hint">V = ⅓ × π × r² × t &nbsp;|&nbsp; LP = π × r × (r + s)</div>
+          <div class="calc-layout">
+            <div class="input-group"><label class="input-label">Jari-jari alas (r)</label><input class="input-field" type="number" id="cone-r" placeholder="contoh: 4" min="0" oninput="calcCone()"></div>
+            <div class="input-group"><label class="input-label">Tinggi (t)</label><input class="input-field" type="number" id="cone-t" placeholder="contoh: 9" min="0" oninput="calcCone()"></div>
+          </div>
+          <div class="result-grid result-grid-3">
+            <div class="result-item"><div class="result-label">Volume</div><div class="result-value" id="cone-vol">—</div><div class="result-sub">satuan³</div></div>
+            <div class="result-item"><div class="result-label">Luas Permukaan</div><div class="result-value" id="cone-sa">—</div><div class="result-sub">satuan²</div></div>
+            <div class="result-item"><div class="result-label">Garis Pelukis (s)</div><div class="result-value" id="cone-s">—</div><div class="result-sub">satuan</div></div>
+          </div>
+        </div>
+
+        <!-- LIMAS SEGIEMPAT -->
+        <div class="calc-panel">
+          <div class="corner-tl"></div><div class="corner-br"></div>
+          <div class="calc-title"><span class="icon">⋈</span> LIMAS SEGIEMPAT</div>
+          <div class="formula-hint">V = ⅓ × s² × t &nbsp;|&nbsp; LP = s² + 4 × (½ × s × t.selimut)</div>
+          <div class="calc-layout">
+            <div class="input-group"><label class="input-label">Sisi alas (s)</label><input class="input-field" type="number" id="lim-s" placeholder="contoh: 6" min="0" oninput="calcLimas()"></div>
+            <div class="input-group"><label class="input-label">Tinggi limas (t)</label><input class="input-field" type="number" id="lim-t" placeholder="contoh: 8" min="0" oninput="calcLimas()"></div>
+          </div>
+          <div class="result-grid result-grid-3">
+            <div class="result-item"><div class="result-label">Volume</div><div class="result-value" id="lim-vol">—</div><div class="result-sub">satuan³</div></div>
+            <div class="result-item"><div class="result-label">Luas Permukaan</div><div class="result-value" id="lim-sa">—</div><div class="result-sub">satuan²</div></div>
+            <div class="result-item"><div class="result-label">Tinggi Selimut</div><div class="result-value" id="lim-sm">—</div><div class="result-sub">satuan</div></div>
+          </div>
+        </div>
+
+      </div><!-- /kiri -->
+
+      <!-- Kanan: Riwayat -->
+      <div>
+        <div class="history-panel history-sticky">
+          <div class="history-header">
+            <div class="history-title">▸ RIWAYAT</div>
+            <button class="btn btn-danger" onclick="clearHistory()">✕ Hapus</button>
+          </div>
+          <div class="history-list" id="history-list-3d">
+            <div class="history-empty" id="hist-empty-3d">// Kosong.</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /page-cols -->
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     ROOM: KELISTRIKAN
+════════════════════════════════════════ -->
+<div id="room-elec" class="room">
+  <div class="container-wide">
+    <div class="logo-wrap">
+      <div class="logo logo-sm">Kal<span>Kyuu</span>lator</div>
+    </div>
+    <button class="btn btn-back" onclick="go('room-landing')">← KEMBALI KE DASHBOARD</button>
+    <div class="room-title room-title-gold">⚡ KELISTRIKAN</div>
+
+    <div class="page-cols">
+      <div>
+
+        <!-- PEMBAGI TEGANGAN -->
+        <div class="calc-panel panel-gold">
+          <div class="corner-tl corner-gold"></div><div class="corner-br corner-gold"></div>
+          <div class="calc-title title-gold"><span class="icon">⎎</span> PEMBAGI TEGANGAN</div>
+          <div class="formula-hint hint-gold">Vout = Vin × R2 / (R1 + R2)</div>
+          <div class="calc-layout">
+            <div>
+              <div class="input-group"><label class="input-label">Vin (Volt)</label><input class="input-field" type="number" id="vd-vin" placeholder="contoh: 12" oninput="calcVoltageDivider()"></div>
+              <div class="input-group"><label class="input-label">R1 (Ohm)</label><input class="input-field" type="number" id="vd-r1" placeholder="contoh: 1000" min="0.001" oninput="calcVoltageDivider()"></div>
+            </div>
+            <div>
+              <div class="input-group"><label class="input-label">R2 (Ohm)</label><input class="input-field" type="number" id="vd-r2" placeholder="contoh: 2200" min="0.001" oninput="calcVoltageDivider()"></div>
+            </div>
+          </div>
+          <div class="result-box box-gold">
+            <div class="result-label">Tegangan Keluaran (Vout)</div>
+            <div class="result-value val-gold" id="vd-vout">—</div>
+            <div class="result-sub" id="vd-vout-sub"></div>
+          </div>
+        </div>
+
+        <!-- HUKUM OHM -->
+        <div class="calc-panel panel-gold">
+          <div class="corner-tl corner-gold"></div><div class="corner-br corner-gold"></div>
+          <div class="calc-title title-gold"><span class="icon">∼</span> HUKUM OHM</div>
+          <div class="formula-hint hint-gold">V = I × R</div>
+          <div class="input-group">
+            <label class="input-label">Cari Nilai</label>
+            <select class="input-field" id="ohm-find" onchange="buildOhmInputs()">
+              <option value="V">Tegangan (V)</option>
+              <option value="I">Arus (I)</option>
+              <option value="R">Hambatan (R)</option>
+            </select>
+          </div>
+          <div id="ohm-inputs" class="calc-layout"></div>
+          <div class="result-box box-gold">
+            <div class="result-label" id="ohm-res-label">Tegangan (V)</div>
+            <div class="result-value val-gold" id="ohm-result">—</div>
+            <div class="result-sub" id="ohm-res-unit"></div>
+          </div>
+        </div>
+
+        <!-- KALKULASI DAYA -->
+        <div class="calc-panel panel-gold">
+          <div class="corner-tl corner-gold"></div><div class="corner-br corner-gold"></div>
+          <div class="calc-title title-gold"><span class="icon">⊕</span> KALKULASI DAYA</div>
+          <div class="formula-hint hint-gold">P = V × I</div>
+          <div class="input-group">
+            <label class="input-label">Cari Nilai</label>
+            <select class="input-field" id="pwr-find" onchange="buildPwrInputs()">
+              <option value="P">Daya (P)</option>
+              <option value="V">Tegangan (V)</option>
+              <option value="I">Arus (I)</option>
+            </select>
+          </div>
+          <div id="pwr-inputs" class="calc-layout"></div>
+          <div class="result-box box-gold">
+            <div class="result-label" id="pwr-res-label">Daya (P)</div>
+            <div class="result-value val-gold" id="pwr-result">—</div>
+            <div class="result-sub" id="pwr-res-unit"></div>
+          </div>
+        </div>
+
+        <!-- ENERGI & BIAYA -->
+        <div class="calc-panel panel-gold">
+          <div class="corner-tl corner-gold"></div><div class="corner-br corner-gold"></div>
+          <div class="calc-title title-gold"><span class="icon">💡</span> ENERGI &amp; BIAYA LISTRIK</div>
+          <div class="formula-hint hint-gold">E = P × t (kWh) &nbsp;|&nbsp; Biaya = E × Tarif</div>
+          <div class="calc-layout">
+            <div>
+              <div class="input-group"><label class="input-label">Daya (Watt)</label><input class="input-field" type="number" id="en-watt" placeholder="contoh: 450" min="0" oninput="calcEnergy()"></div>
+              <div class="input-group"><label class="input-label">Durasi pakai (jam/hari)</label><input class="input-field" type="number" id="en-hours" placeholder="contoh: 8" min="0" oninput="calcEnergy()"></div>
+            </div>
+            <div>
+              <div class="input-group"><label class="input-label">Jumlah hari</label><input class="input-field" type="number" id="en-days" placeholder="contoh: 30" min="0" oninput="calcEnergy()"></div>
+              <div class="input-group"><label class="input-label">Tarif per kWh (Rp)</label><input class="input-field" type="number" id="en-tariff" placeholder="contoh: 1444" min="0" oninput="calcEnergy()"></div>
+            </div>
+          </div>
+          <div class="result-grid">
+            <div class="result-item item-gold"><div class="result-label">Konsumsi Energi</div><div class="result-value val-gold" id="en-kwh">—</div><div class="result-sub">kWh</div></div>
+            <div class="result-item item-green"><div class="result-label">Estimasi Biaya</div><div class="result-value val-green" id="en-cost">—</div><div class="result-sub">Rupiah</div></div>
+          </div>
+        </div>
+
+      </div><!-- /kiri -->
+
+      <!-- Kanan: Riwayat -->
+      <div>
+        <div class="history-panel history-sticky history-gold">
+          <div class="history-header">
+            <div class="history-title title-gold">▸ RIWAYAT</div>
+            <button class="btn btn-danger" onclick="clearHistory()">✕ Hapus</button>
+          </div>
+          <div class="history-list" id="history-list-elec">
+            <div class="history-empty" id="hist-empty-elec">// Kosong.</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /page-cols -->
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     ROOM: FISIKA (BARU)
+════════════════════════════════════════ -->
+<div id="room-phys" class="room">
+  <div class="container-wide">
+    <div class="logo-wrap">
+      <div class="logo logo-sm">Kal<span>Kyuu</span>lator</div>
+    </div>
+    <button class="btn btn-back" onclick="go('room-landing')">← KEMBALI KE DASHBOARD</button>
+    <div class="room-title room-title-violet">⚛ FISIKA</div>
+
+    <div class="page-cols">
+      <div>
+
+        <!-- ─── SEKSI: MEKANIKA & GERAK ─── -->
+        <div class="section-label label-violet">▸ MEKANIKA &amp; GERAK</div>
+
+        <!-- KECEPATAN GLB -->
+        <div class="calc-panel panel-violet">
+          <div class="corner-tl corner-violet"></div><div class="corner-br corner-violet"></div>
+          <div class="calc-title title-violet"><span class="icon">🚀</span> KECEPATAN (GLB)</div>
+          <div class="formula-hint hint-violet">v = s / t</div>
+          <div class="input-group">
+            <label class="input-label">Cari Nilai</label>
+            <select class="input-field" id="vel-find" onchange="buildVelInputs()">
+              <option value="v">Kecepatan (v) m/s</option>
+              <option value="s">Jarak (s) meter</option>
+              <option value="t">Waktu (t) detik</option>
+            </select>
+          </div>
+          <div id="vel-inputs" class="calc-layout"></div>
+          <div class="result-box box-violet">
+            <div class="result-label" id="vel-res-label">Kecepatan (v)</div>
+            <div class="result-value val-violet" id="vel-result">—</div>
+            <div class="result-sub" id="vel-res-unit"></div>
+          </div>
+        </div>
+
+        <!-- GLBB -->
+        <div class="calc-panel panel-violet">
+          <div class="corner-tl corner-violet"></div><div class="corner-br corner-violet"></div>
+          <div class="calc-title title-violet"><span class="icon">⚡</span> GLBB</div>
+          <div class="formula-hint hint-violet">vₜ = v₀ + a·t &nbsp;|&nbsp; s = v₀·t + ½·a·t²</div>
+          <div class="calc-layout">
+            <div>
+              <div class="input-group"><label class="input-label">Kec. awal v₀ (m/s)</label><input class="input-field" type="number" id="glbb-v0" placeholder="contoh: 0" oninput="calcGLBB()"></div>
+              <div class="input-group"><label class="input-label">Percepatan a (m/s²)</label><input class="input-field" type="number" id="glbb-a" placeholder="contoh: 2" oninput="calcGLBB()"></div>
+            </div>
+            <div>
+              <div class="input-group"><label class="input-label">Waktu t (detik)</label><input class="input-field" type="number" id="glbb-t" placeholder="contoh: 5" min="0" oninput="calcGLBB()"></div>
+            </div>
+          </div>
+          <div class="result-grid">
+            <div class="result-item item-violet"><div class="result-label">Kec. akhir vₜ</div><div class="result-value val-violet" id="glbb-vt">—</div><div class="result-sub">m/s</div></div>
+            <div class="result-item item-violet"><div class="result-label">Jarak (s)</div><div class="result-value val-violet" id="glbb-s">—</div><div class="result-sub">meter</div></div>
+          </div>
+        </div>
+
+        <!-- GERAK JATUH BEBAS -->
+        <div class="calc-panel panel-violet">
+          <div class="corner-tl corner-violet"></div><div class="corner-br corner-violet"></div>
+          <div class="calc-title title-violet"><span class="icon">🪂</span> GERAK JATUH BEBAS</div>
+          <div class="formula-hint hint-violet">h = ½·g·t² &nbsp;|&nbsp; v = g·t</div>
+          <div class="calc-layout">
+            <div class="input-group"><label class="input-label">Ketinggian h (meter)</label><input class="input-field" type="number" id="gjb-h" placeholder="contoh: 20" min="0" oninput="calcGJB()"></div>
+            <div class="input-group"><label class="input-label">g gravitasi (m/s²)</label><input class="input-field" type="number" id="gjb-g" placeholder="9.8" value="9.8" min="0" oninput="calcGJB()"></div>
+          </div>
+          <div class="result-grid">
+            <div class="result-item item-violet"><div class="result-label">Waktu jatuh (t)</div><div class="result-value val-violet" id="gjb-t">—</div><div class="result-sub">detik</div></div>
+            <div class="result-item item-violet"><div class="result-label">Kec. akhir (v)</div><div class="result-value val-violet" id="gjb-v">—</div><div class="result-sub">m/s</div></div>
+          </div>
+        </div>
+
+        <!-- HUKUM NEWTON II -->
+        <div class="calc-panel panel-violet">
+          <div class="corner-tl corner-violet"></div><div class="corner-br corner-violet"></div>
+          <div class="calc-title title-violet"><span class="icon">⚙</span> HUKUM NEWTON II</div>
+          <div class="formula-hint hint-violet">F = m × a</div>
+          <div class="input-group">
+            <label class="input-label">Cari Nilai</label>
+            <select class="input-field" id="newt-find" onchange="buildNewtInputs()">
+              <option value="F">Gaya F (Newton)</option>
+              <option value="m">Massa m (kg)</option>
+              <option value="a">Percepatan a (m/s²)</option>
+            </select>
+          </div>
+          <div id="newt-inputs" class="calc-layout"></div>
+          <div class="result-box box-violet">
+            <div class="result-label" id="newt-res-label">Gaya (F)</div>
+            <div class="result-value val-violet" id="newt-result">—</div>
+            <div class="result-sub" id="newt-res-unit"></div>
+          </div>
+        </div>
+
+        <!-- ─── SEKSI: ENERGI & USAHA ─── -->
+        <div class="section-label label-violet" style="margin-top:24px">▸ ENERGI &amp; USAHA</div>
+
+        <!-- USAHA -->
+        <div class="calc-panel panel-violet">
+          <div class="corner-tl corner-violet"></div><div class="corner-br corner-violet"></div>
+          <div class="calc-title title-violet"><span class="icon">🔧</span> USAHA</div>
+          <div class="formula-hint hint-violet">W = F × s × cos θ</div>
+          <div class="calc-layout">
+            <div>
+              <div class="input-group"><label class="input-label">Gaya F (Newton)</label><input class="input-field" type="number" id="wk-f" placeholder="contoh: 50" oninput="calcWork()"></div>
+              <div class="input-group"><label class="input-label">Perpindahan s (m)</label><input class="input-field" type="number" id="wk-s" placeholder="contoh: 10" min="0" oninput="calcWork()"></div>
+            </div>
+            <div>
+              <div class="input-group"><label class="input-label">Sudut θ (derajat)</label><input class="input-field" type="number" id="wk-th" placeholder="0 = searah" value="0" oninput="calcWork()"></div>
+            </div>
+          </div>
+          <div class="result-box box-violet">
+            <div class="result-label">Usaha (W)</div>
+            <div class="result-value val-violet" id="wk-result">—</div>
+            <div class="result-sub">Joule</div>
+          </div>
+        </div>
+
+        <!-- ENERGI KINETIK & POTENSIAL -->
+        <div class="calc-panel panel-violet">
+          <div class="corner-tl corner-violet"></div><div class="corner-br corner-violet"></div>
+          <div class="calc-title title-violet"><span class="icon">⚡</span> ENERGI KINETIK &amp; POTENSIAL</div>
+          <div class="formula-hint hint-violet">Ek = ½mv² &nbsp;|&nbsp; Ep = m·g·h</div>
+          <div class="calc-layout">
+            <div>
+              <div class="input-group"><label class="input-label">Massa (kg)</label><input class="input-field" type="number" id="en2-m" placeholder="contoh: 5" min="0" oninput="calcEnergy2()"></div>
+              <div class="input-group"><label class="input-label">Kecepatan v (m/s)</label><input class="input-field" type="number" id="en2-v" placeholder="untuk Ek" oninput="calcEnergy2()"></div>
+            </div>
+            <div>
+              <div class="input-group"><label class="input-label">Ketinggian h (m)</label><input class="input-field" type="number" id="en2-h" placeholder="untuk Ep" min="0" oninput="calcEnergy2()"></div>
+              <div class="input-group"><label class="input-label">g (m/s²)</label><input class="input-field" type="number" id="en2-g" value="9.8" min="0" oninput="calcEnergy2()"></div>
+            </div>
+          </div>
+          <div class="result-grid">
+            <div class="result-item item-violet"><div class="result-label">Energi Kinetik (Ek)</div><div class="result-value val-violet" id="en2-ek">—</div><div class="result-sub">Joule</div></div>
+            <div class="result-item item-violet"><div class="result-label">Energi Potensial (Ep)</div><div class="result-value val-violet" id="en2-ep">—</div><div class="result-sub">Joule</div></div>
+          </div>
+        </div>
+
+        <!-- ─── SEKSI: GELOMBANG & BUNYI ─── -->
+        <div class="section-label label-violet" style="margin-top:24px">▸ GELOMBANG &amp; BUNYI</div>
+
+        <!-- PERSAMAAN GELOMBANG -->
+        <div class="calc-panel panel-violet">
+          <div class="corner-tl corner-violet"></div><div class="corner-br corner-violet"></div>
+          <div class="calc-title title-violet"><span class="icon">〜</span> PERSAMAAN GELOMBANG</div>
+          <div class="formula-hint hint-violet">v = λ × f</div>
+          <div class="input-group">
+            <label class="input-label">Cari Nilai</label>
+            <select class="input-field" id="wave-find" onchange="buildWaveInputs()">
+              <option value="v">Kecepatan v (m/s)</option>
+              <option value="lam">Panjang gelombang λ (m)</option>
+              <option value="f">Frekuensi f (Hz)</option>
+            </select>
+          </div>
+          <div id="wave-inputs" class="calc-layout"></div>
+          <div class="result-box box-violet">
+            <div class="result-label" id="wave-res-label">Kecepatan (v)</div>
+            <div class="result-value val-violet" id="wave-result">—</div>
+            <div class="result-sub" id="wave-res-unit"></div>
+          </div>
+        </div>
+
+        <!-- PERIODE & FREKUENSI -->
+        <div class="calc-panel panel-violet">
+          <div class="corner-tl corner-violet"></div><div class="corner-br corner-violet"></div>
+          <div class="calc-title title-violet"><span class="icon">🔄</span> PERIODE &amp; FREKUENSI</div>
+          <div class="formula-hint hint-violet">T = 1/f &nbsp;|&nbsp; f = 1/T</div>
+          <div class="calc-layout">
+            <div class="input-group"><label class="input-label">Frekuensi f (Hz)</label><input class="input-field" type="number" id="per-f" placeholder="contoh: 50" min="0.001" oninput="calcPeriodeFromF()"></div>
+            <div class="input-group"><label class="input-label">atau Periode T (s)</label><input class="input-field" type="number" id="per-t" placeholder="contoh: 0.02" min="0.001" oninput="calcPeriodeFromT()"></div>
+          </div>
+          <div class="result-grid">
+            <div class="result-item item-violet"><div class="result-label">Periode (T)</div><div class="result-value val-violet" id="per-tres">—</div><div class="result-sub">detik</div></div>
+            <div class="result-item item-violet"><div class="result-label">Frekuensi (f)</div><div class="result-value val-violet" id="per-fres">—</div><div class="result-sub">Hz</div></div>
+          </div>
+        </div>
+
+        <!-- TARAF INTENSITAS BUNYI -->
+        <div class="calc-panel panel-violet">
+          <div class="corner-tl corner-violet"></div><div class="corner-br corner-violet"></div>
+          <div class="calc-title title-violet"><span class="icon">🔊</span> TARAF INTENSITAS BUNYI</div>
+          <div class="formula-hint hint-violet">TI = 10 × log(I / I₀) dB</div>
+          <div class="calc-layout">
+            <div class="input-group"><label class="input-label">Intensitas I (W/m²)</label><input class="input-field" type="number" id="snd-i" placeholder="contoh: 0.001" step="any" min="0" oninput="calcSound()"></div>
+            <div class="input-group"><label class="input-label">I₀ referensi (W/m²)</label><input class="input-field" type="number" id="snd-i0" value="1e-12" step="any" min="0" oninput="calcSound()"></div>
+          </div>
+          <div class="result-box box-violet">
+            <div class="result-label">Taraf Intensitas</div>
+            <div class="result-value val-violet" id="snd-result">—</div>
+            <div class="result-sub">desibel (dB)</div>
+          </div>
+        </div>
+
+      </div><!-- /kiri -->
+
+      <!-- Kanan: Riwayat -->
+      <div>
+        <div class="history-panel history-sticky history-violet">
+          <div class="history-header">
+            <div class="history-title title-violet">▸ RIWAYAT</div>
+            <button class="btn btn-danger" onclick="clearHistory()">✕ Hapus</button>
+          </div>
+          <div class="history-list" id="history-list-phys">
+            <div class="history-empty" id="hist-empty-phys">// Kosong.</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /page-cols -->
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
